@@ -52,7 +52,7 @@ const BlogCard: React.FC<BlogDetailsProps> = ({ blog }) => {
       <div className="flex items-center gap-2">
         {
           blog.category.map((category, index) => (
-            <p className='bg-[#03051f] shadow-md shadow-[#262957] px-4 py-1  rounded-full text-gray-100'>
+            <p key={index} className='bg-[#03051f] shadow-md shadow-[#262957] px-4 py-1  rounded-full text-gray-100'>
               {category}
             </p>
           ))

@@ -49,7 +49,7 @@ const Navbar = () => {
                 <hr className='opacity-50' />
                 {
                     links.map((link, index) => (
-                        <Link className='hover:text-[#565dbd] transition-all ease-in-out duration-500' href={`/${link.link}`}>
+                        <Link key={index} className='hover:text-[#565dbd] transition-all ease-in-out duration-500' href={`/${link.link}`}>
                             <p>
                                 {link.name}
                             </p>
@@ -79,7 +79,7 @@ const Navbar = () => {
                 <div className="middle hidden md:flex gap-4 items-start">
                     {
                         links.map((link, index) => (
-                            <Link className='hover:text-[#565dbd] transition-all ease-in-out duration-500' href={`/${link.link}`}>
+                            <Link key={index} className='hover:text-[#565dbd] transition-all ease-in-out duration-500' href={`/${link.link}`}>
                                 <p>
                                     {link.name}
                                 </p>
