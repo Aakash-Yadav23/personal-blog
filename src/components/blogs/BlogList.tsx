@@ -138,7 +138,10 @@ const BlogList = () => {
         <div className='w-full grid gap-6'>
             {
                 blogs.map((blog, index) => (
-                    <BlogCard blog={blog} />
+                    <>
+                        <BlogCard blog={blog} />
+                        <hr className='opacity-50' />
+                    </>
                 ))
             }
         </div>

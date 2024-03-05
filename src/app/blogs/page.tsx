@@ -26,7 +26,7 @@ const Page = () => {
         </div>
 
         <div className="article-here  py-10 w-full text-start ">
-          <h1 className='py-5 text-1xl font-medium'>Articles</h1>
+          <h1 className='py-5 text-2xl font-medium'>Articles</h1>
           <hr className='w-full  opacity-50 h-1' />
         </div>
 

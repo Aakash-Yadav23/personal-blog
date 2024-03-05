@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import Topic from '../Search/Topic'
 
 interface BlogDetailsProps {
   blog: BlogDetails
@@ -46,6 +47,16 @@ const BlogCard: React.FC<BlogDetailsProps> = ({ blog }) => {
         </div>
 
         <Image src={blog.image} className={`w-[70px] h-[70px] sm:h-[100px] sm:w-[100px]  rounded-sm object-cover`} alt={blog.title} width={250} height={250} />
+      </div>
+
+      <div className="flex items-center gap-2">
+        {
+          blog.category.map((category, index) => (
+            <p className='bg-[#03051f] shadow-md shadow-[#262957] px-4 py-1  rounded-full text-gray-100'>
+              {category}
+            </p>
+          ))
+        }
       </div>
 
     </div>
