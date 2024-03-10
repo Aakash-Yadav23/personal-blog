@@ -1,7 +1,7 @@
 import React from 'react'
-import BlogCard from './BlogCard';
+import AdminBlogCard from './AdminBlogCard';
 
-const BlogList = () => {
+const AdminBlogList = () => {
     const blogs = [
         {
             authorName: "Emily Johnson",
@@ -148,7 +148,7 @@ const BlogList = () => {
             {
                 blogs.map((blog, index) => (
                     <>
-                        <BlogCard blog={blog} />
+                        <AdminBlogCard blog={blog} />
                         <hr className='opacity-50' />
                     </>
                 ))
@@ -157,5 +157,5 @@ const BlogList = () => {
     )
 }
 
-export default BlogList
+export default AdminBlogList
 

@@ -17,6 +17,7 @@ interface BlogDetails {
   authorProfession: string
   category: string[]
   image: string
+  views: Number,
   // authorProfession: string
   comments: any
 

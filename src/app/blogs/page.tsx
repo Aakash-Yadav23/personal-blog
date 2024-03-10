@@ -3,6 +3,7 @@ import Search from '@/components/Search/Search';
 import Topic from '@/components/Search/Topic';
 import { BlogList } from '@/components/blogs';
 import MaxWidthWrapper from '@/components/wrapper/Maxwidthwrapper';
+import NavWrapper from '@/components/wrapper/NavWrapper';
 import React from 'react';
 
 const Page = () => {
@@ -10,7 +11,8 @@ const Page = () => {
   const topics = ['Node js', 'React js', 'Next js', 'Aws', 'Ec2', 'Lambda', 'ECR', 'ECS', 'Personal'];
 
   return (
-    <section className='py-5'>
+
+    <section className='py-40'>
       <div className="absolute top-0 z-[-2] h-screen w-screen bg-[#03051f] bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"> </div>
 
       <MaxWidthWrapper className='flex-col w-full py-5 md:py-2  bg-transparent  '>
@@ -36,7 +38,6 @@ const Page = () => {
         <PaginationComp />
       </MaxWidthWrapper>
     </section>
-
   );
 };
 

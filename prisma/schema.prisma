@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum role {
+  USER
+  ADMIN
+}
+
+model User {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  email     String     @unique
+  password  String
+  name      String?
+  role      role
+  posts     Post[]
+  portfolio PortFolio?
+
+  createdAt DateTime  @default(now()) // Add createdAt field
+  updatedAt DateTime? @updatedAt // Add updatedAt field
+}
+
+model Post {
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
+  slug             String    @unique
+  title            String
+  body             String
+  shortDescription String
+  views            Int
+  author           User      @relation(fields: [authorId], references: [id])
+  authorId         String    @db.ObjectId
+  comments         Comment[]
+  createdAt        DateTime  @default(now()) // Add createdAt field
+  updatedAt        DateTime? @updatedAt // Add updatedAt field
+}
+
+model Comment {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  comment   String
+  post      Post      @relation(fields: [postId], references: [id])
+  postId    String    @db.ObjectId
+  createdAt DateTime  @default(now()) // Add createdAt field
+  updatedAt DateTime? @updatedAt // Add updatedAt field
+}
+
+model Notifications {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  message   String
+  createdAt DateTime  @default(now()) // Add createdAt field
+  updatedAt DateTime? @updatedAt // Add updatedAt field
+}
+
+model HeroContent {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  subtitle  String
+  image     String
+  createdAt DateTime  @default(now()) // Add createdAt field
+  updatedAt DateTime? @updatedAt // Add updatedAt field
+}
+
+model AboutContent {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  createdAt DateTime  @default(now()) // Add createdAt field
+  updatedAt DateTime? @updatedAt // Add updatedAt field
+}
+
+model PortFolio {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  description String
+  githubUrl   String
+
+  projects Projects[]
+  authorId String     @unique @db.ObjectId
+  author   User       @relation(fields: [authorId], references: [id])
+}
+
+type Projects {
+  title      String
+  descripton String
+  githubUrl  String
+  liveUrl    String
+}

@@ -1,0 +1,21 @@
+/* quill-custom-styles.css */
+
+.ql-editor img,
+.ql-editor video,
+iframe {
+  width: 100%;
+  max-height: 540px;
+  object-fit: contain;
+  margin: 0 auto; /* To center images */
+}
+.ql-editor iframe {
+  width: 100%;
+  max-height: 540px;
+  height: 600px;
+  object-fit: contain;
+  margin: 0 auto; /* To center images */
+}
+
+.ql-editor video {
+  display: block; /* Remove default inline video styling */
+}
