@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { CreatePost, PostType } from '@/types/Post';
 import { CreatePostFun, GetAllPost, GetPostById } from '@/lib/mutation';
 import toast from 'react-hot-toast';
-import { useParams } from 'next/navigation';
 
 const usePost = () => {
     const [loading, setLoading] = useState(false);
