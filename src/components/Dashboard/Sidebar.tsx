@@ -45,8 +45,8 @@ const Sidebar = () => {
         <h1>Aakash Yadav</h1>
       </div>
       {
-        options.map((option) => (
-          <Link href={`/admin/${option.link}`}>
+        options.map((option, index) => (
+          <Link key={index} href={`/admin/${option.link}`}>
             <span className='py-1 flex gap-2 items-center  cursor-pointer hover:opacity-80 transition-all ease-in-out duration-500'>
               {option.icon}
               {option.title}

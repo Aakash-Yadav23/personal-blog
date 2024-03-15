@@ -1,64 +1,91 @@
 'use client'
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { z, ZodError } from 'zod';
-import { useRouter } from 'next/navigation'; // Import for Next.js routing
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
-import { login } from '@/lib/mutation';
 
-// Define the schema using Zod
-const schema = z.object({
-    email: z.string().email(),
-    password: z.string().min(6),
-});
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { Button } from "@/components/ui/button"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
+import { Input } from "@/components/ui/input";
 
-const Login = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const router = useRouter(); // Get router instance
+import { login } from "@/lib/mutation" // Import the login function from your mutations file
+import { useRouter } from "next/navigation" // Import the useRouter hook from Next.js
+import { Github } from "lucide-react" // Import icons for Google and GitHub sign-in
+import googlePng from '@/assets/images/google.png'
+import Image from "next/image"
+import toast, { Toaster } from 'react-hot-toast';
+const formSchema = z.object({
+    email: z.string().min(2, { message: "Email must be at least 2 characters." }),
+    password: z.string().min(6, { message: "Password must be at least 10 characters." }),
+})
 
-    // Function to handle form submission
-    const onSubmit = async (data: typeof schema) => {
+function Login() {
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            email: "",
+            password: "",
+        },
+    })
+    const router = useRouter() // Get the router instance
+
+    // Define a submit handler.
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            // Validate form data against the schema
-            const validatedData = schema.parse(data);
+            const response = await login(values) // Call the login function from your mutations file
 
-            const response = await login(validatedData)
-            // If validation passes, proceed with registration logic (replace with your API call)
-            console.log('Email:', validatedData.email);
-            console.log('Password:', validatedData.password);
-
-            // Replace with your actual registration logic (e.g., API call)
-            // router.push('/login'); // Navigate to login page after successful registration (optional)
-        } catch (error) {
-            // Handle validation errors
-            if (error instanceof ZodError) {
-                console.error(error.errors);
+            if (response === 200) {
+                router.push('/admin/dashboard')
             }
+
+            console.log("response", response)
+
+        } catch (error) {
+            console.error("Error during login:", error)
+            throw new Error(`Error during login ${error}`)
         }
-    };
+    }
 
     return (
-        <div className='w-full '>
-            <form onSubmit={handleSubmit(onSubmit)} className='flex w-full flex-col gap-1'>
-                <div>
-                    <label>Email:</label>
-                    <Input type="email" {...register('email')} className='w-full' />
-                    {errors.email && <span>{errors.email.message}</span>}
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <Input type="password" {...register('password')} className='w-full' />
-                    {errors.password && <span>{errors.password.message}</span>}
-                </div>
-                <br />
-                <Button type="submit" className='py-5 w-full'>Login</Button>
-                <Button className='mt-2 w-full bg-white text-black hover:opacity-80 border hover:bg-white' type="submit">Sign in with google</Button>
-
-
-            </form>
+        <div className="w-full  mx-auto ">
+            <Toaster />
+            <Form {...form} >
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
+                    <FormField control={form.control} name="email" render={({ field }) => (
+                        <FormItem className="w-full">
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                                <Input placeholder="Email" {...field} />
+                            </FormControl>
+                            <FormDescription> Provide your email. </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )} />
+                    <FormField control={form.control} name="password" render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Password</FormLabel>
+                            <FormControl>
+                                <Input type="password" placeholder="password" {...field} />
+                            </FormControl>
+                            <FormDescription> Provide your password. </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )} />
+                    <Button type="submit" className="w-full">
+                        Submit
+                    </Button>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
+                        <Button variant="outline" className="flex items-center gap-1 w-full">
+                            <Image src={googlePng.src} width={100} height={100} alt="Google" className="h-10 object-contain" /> Sign in with Google
+                        </Button>
+                        <Button variant="outline" className="flex items-center gap-1 w-full">
+                            <Github /> Sign in with GitHub
+                        </Button>
+                    </div>
+                </form>
+            </Form>
         </div>
-    );
-};
+    )
+}
 
-export default Login;
+export default Login
+

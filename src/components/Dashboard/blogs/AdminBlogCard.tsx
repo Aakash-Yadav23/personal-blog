@@ -1,29 +1,16 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import { PostType } from '@/types/Post'
 import { DeleteIcon, Edit, Eye, Pencil, Trash } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
 interface BlogDetailsProps {
-    blog: BlogDetails
+    blog: PostType
 }
 
-interface BlogDetails {
-    title: string,
-    shortDescription: string
-    blog: string,
-    createdAt: string
-    authorName: string
-    authorImage: string
-    authorProfession: string
-    category: string[]
-    image: string
-    views: number
-    // authorProfession: string
-    comments: any
 
-}
 
 const AdminBlogCard: React.FC<BlogDetailsProps> = ({ blog }) => {
     return (
@@ -37,14 +24,14 @@ const AdminBlogCard: React.FC<BlogDetailsProps> = ({ blog }) => {
                             <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
                         <div className="flex flex-col gap-0">
-                            <p className='text-1xl font-medium'>{blog.authorName}</p>
-                            <p className='text-[13px] opacity-70'>{blog.authorProfession}</p>
+                            <p className='text-1xl font-medium'>{blog.author.name}</p>
+                            <p className='text-[13px] opacity-70'>{blog.author.profession}</p>
 
                         </div>
                     </div>
 
                     <div className="edit flex items-center gap-2 ">
-                        <Link href={`/admin/blog/${blog.views}`}>
+                        <Link href={`/admin/blog/${blog.slug}`}>
                             <Pencil size={18} className='cursor-pointer hover:opacity-80' />
                         </Link>
                         <Button className='hover:bg-red-500 hover:text-white transition-all ease-in-out duration-500' variant={'ghost'}>
@@ -59,16 +46,16 @@ const AdminBlogCard: React.FC<BlogDetailsProps> = ({ blog }) => {
                         <h1 className='text-[1.2rem] sm:text-2xl font-semibold'>{blog.title}</h1>
 
                         <p className='text-sm hidden sm:block'>
-                            {blog.blog.slice(0, 400)}
+                            {blog.shortDescription.slice(0, 400)}
                         </p>
                     </div>
 
-                    <Image src={blog.image} className={`w-[70px] h-[70px] sm:h-[100px] sm:w-[100px]  rounded-sm object-cover`} alt={blog.title} width={250} height={250} />
+                    <Image src={blog.thumbnail} className={`w-[70px] h-[70px] sm:h-[100px] sm:w-[100px]  rounded-sm object-cover`} alt={blog.title} width={250} height={250} />
                 </div>
 
                 <div className="flex items-center gap-2">
                     {
-                        blog.category.map((category, index) => (
+                        blog?.category?.map((category, index) => (
                             <p key={index} className='bg-[#03051f] shadow-md shadow-[#262957] px-4 py-1  rounded-full text-gray-100'>
                                 {category}
                             </p>

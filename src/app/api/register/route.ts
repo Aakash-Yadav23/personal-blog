@@ -1,4 +1,4 @@
-// pages/api/auth/login.ts
+// pages/api/auth/register.ts
 
 
 import { PrismaClient } from '@prisma/client';
@@ -17,7 +17,7 @@ async function POST(req: NextRequest, res: NextApiResponse) {
 
     if (!email || !password || !name) {
       return NextResponse.json({ message: 'Missing Required Fields' }, {
-        status: 303
+        status: 400
       });
 
     }
@@ -39,18 +39,23 @@ async function POST(req: NextRequest, res: NextApiResponse) {
         email,
         password: hashedPassword,
         name,
+        role: "USER",
+        profession: "Software Developer"
+
       },
     });
 
 
     return NextResponse.json({ message: 'Registration Successfully' }, {
-      status: 200
+      status: 201
     });
 
   } catch (error: any) {
 
-    console.log("Error while login", error);
-    throw new Error(error.message);
+    console.error("Error while login", error);
+    return NextResponse.json({ message: 'Registration Failed' }, {
+      status: 500 // Corrected status code
+    });
   }
 
 }

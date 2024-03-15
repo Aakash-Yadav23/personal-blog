@@ -1,13 +1,15 @@
 'use client'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { Button } from '../ui/button'
 import { Menu, X } from 'lucide-react'
+import ProfileCard from '../wrapper/ProfileCard'
 
 
 const Navbar = () => {
     const [navOpen, setNavOpen] = useState(false);
+
+
     const links = [
         {
             name: "Home",
@@ -89,9 +91,7 @@ const Navbar = () => {
                 </div>
 
                 <div className="login">
-                    <Button className='glass-effect'>
-                        Sign in
-                    </Button>
+                    <ProfileCard />
                 </div>
             </ul>
 

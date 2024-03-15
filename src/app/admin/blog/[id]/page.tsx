@@ -1,13 +1,38 @@
-import EditorWrapper from '@/components/blogs/editor/EditorWrapper'
-import React from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'next/navigation';
+import usePost from '@/hooks/usePost';
+import { PostType } from '@/types/Post';
 
-const page = () => {
+
+const Page = () => {
+  const { id } = useParams();
+  const [post, setPost] = useState<PostType>();
+
+  const { getByIdPost, loading } = usePost();
+
+
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getByIdPost(id as string) as PostType;
+      console.log("data,data", data);
+      setPost(data);
+    }
+
+    if (id) getData();
+  }, [id, getByIdPost])
+
+
   return (
-    <div className='text-white'>
-      <EditorWrapper />
+    <>
 
-    </div>
+{/* 
+      {post &&
+        < EditorWrapper post={post} postLoading={loading} />
+      } */}
+    </>
   )
 }
 
-export default page
+export default Page;

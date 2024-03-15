@@ -1,5 +1,6 @@
 import AdminBlogList from '@/components/Dashboard/blogs/AdminBlogList'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 import React from 'react'
 
 const page = () => {
@@ -10,9 +11,11 @@ const page = () => {
         <span className='text-2xl font-bold '>
           Blogs
         </span>
-        <Button className='bg-blue-500 hover:bg-blue-600 transition-all ease-in-out duration-500'>
-          New Blog
-        </Button>
+        <Link href={`/admin/blog/newblog`}>
+          <Button className='bg-blue-500 hover:bg-blue-600 transition-all ease-in-out duration-500'>
+            New Blog
+          </Button>
+        </Link>
       </div>
 
 
